@@ -14,7 +14,7 @@ export default function MovieGrid({ movies, onSelect }: MovieGridProps) {
       {movies.map((movie) => {
         const imageUrl = movie.poster_path
           ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-          : "https://via.placeholder.com/300x450";
+          : "https://via.placeholder.co/300x450";
 
         return (
           <li key={movie.id}>
