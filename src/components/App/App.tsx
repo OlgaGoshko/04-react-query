@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { Movie } from "../../types/movie";
 import SearchBar from "../SearchBar/SearchBar";
 import { fetchMovies } from "../../services/movieService";
-import toast, { Toaster } from "react-hot-toast";
+// import toast, { Toaster } from "react-hot-toast";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -20,11 +20,11 @@ const ReactPaginate = (
   >
 ).default;
 
-interface PaginationProps {
-  totalPages: number;
-  currentPage: number;
-  onPageChange: (nextPage: number) => void;
-}
+// interface PaginationProps {
+//   totalPages: number;
+//   currentPage: number;
+//   onPageChange: (nextPage: number) => void;
+// }
 
 export default function App() {
   const [query, setQuery] = useState("");
@@ -75,7 +75,7 @@ export default function App() {
         />
       )}
 
-      <Toaster position="top-right" />
+      {/* <Toaster position="top-right" /> */}
     </>
   );
 }
