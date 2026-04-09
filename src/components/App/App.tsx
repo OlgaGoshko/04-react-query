@@ -2,7 +2,8 @@ import { useState } from "react";
 import type { Movie } from "../../types/movie";
 import SearchBar from "../SearchBar/SearchBar";
 import { fetchMovies } from "../../services/movieService";
-// import toast, { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { useEffect } from "react";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -31,7 +32,7 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["movies", query, page],
     queryFn: () => fetchMovies(query, page),
     enabled: !!query,
@@ -42,6 +43,11 @@ export default function App() {
     setQuery(newQuery);
     setPage(1);
   };
+  useEffect(() => {
+    if (isSuccess && data?.results.length === 0) {
+      toast("No movies found for your request");
+    }
+  }, [data, isSuccess]);
 
   return (
     <>
@@ -49,7 +55,7 @@ export default function App() {
 
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
-      {data && data.results.length > 0 && (
+      {isSuccess && data.results.length > 0 && (
         <>
           <MovieGrid movies={data.results} onSelect={setSelectedMovie} />
           {data.total_pages > 1 && (
@@ -75,7 +81,7 @@ export default function App() {
         />
       )}
 
-      {/* <Toaster position="top-right" /> */}
+      <Toaster position="top-right" />
     </>
   );
 }
